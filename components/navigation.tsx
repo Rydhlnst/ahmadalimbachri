@@ -32,63 +32,86 @@ export function Navigation() {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
-          scrolled
-            ? "bg-navy shadow-lg shadow-navy/10"
-            : "bg-navy"
-        )}
+        className="fixed top-0 left-0 right-0 z-50"
       >
-        <nav className="content-wide h-[64px] flex items-center justify-between px-6 md:px-10 lg:px-16">
-          <a
-            href="#hero"
-            className="flex items-center gap-2.5 group"
-            aria-label="Kembali ke atas"
-          >
-            <span className="font-heading text-base font-bold text-white tracking-tight">
-              Prof. Dr. Ahmad
-            </span>
-            <span className="hidden sm:inline text-base font-medium text-white/40 border-l border-white/15 pl-2.5">
-              Rektor ULM
-            </span>
-          </a>
+        {/* Top bar — logo area */}
+        <div
+          className={cn(
+            "transition-all duration-500 bg-white border-b border-neutral-200",
+            scrolled ? "h-0 overflow-hidden opacity-0" : "h-12 opacity-100"
+          )}
+        >
+          <div className="content-wide h-full flex items-center justify-between px-6 md:px-10 lg:px-16">
+            <a
+              href="#hero"
+              className="flex items-center gap-2.5 group"
+              aria-label="Kembali ke atas"
+            >
+              <span className="font-heading text-sm font-bold text-navy tracking-tight">
+                Prof. Dr. Ahmad Alim Bachri
+              </span>
+              <span className="hidden sm:inline text-[11px] font-medium text-neutral-400 border-l border-neutral-200 pl-2.5">
+                Rektor Universitas Lambung Mangkurat
+              </span>
+            </a>
+          </div>
+        </div>
 
-          <ul className="hidden md:flex items-center gap-0.5" role="list">
-            {navLinks.map((link) => {
-              const sectionId = link.href.replace("#", "");
-              const isActive = activeSection === sectionId;
-              return (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className={cn(
-                      "relative px-3 py-1.5 text-base font-medium transition-all duration-300 ",
-                      isActive
-                        ? "text-white bg-white/10"
-                        : "text-white/55 hover:text-white hover:bg-white/5"
-                    )}
-                  >
-                    {link.label}
-                    {isActive && (
-                      <motion.span
-                        layoutId="nav-indicator"
-                        className="absolute bottom-0 left-2.5 right-2.5 h-[1.5px] bg-gold "
-                        transition={{ type: "spring", stiffness: 350, damping: 30 }}
-                      />
-                    )}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
+        {/* Bottom bar — nav links */}
+        <nav
+          className={cn(
+            "transition-all duration-500 bg-navy",
+            scrolled ? "shadow-lg shadow-navy/10" : ""
+          )}
+        >
+          <div className="content-wide h-[48px] flex items-center justify-between px-6 md:px-10 lg:px-16">
+            <a
+              href="#hero"
+              className="md:hidden flex items-center gap-2 group"
+              aria-label="Kembali ke atas"
+            >
+              <span className="font-heading text-sm font-bold text-white tracking-tight">
+                Prof. Dr. Ahmad
+              </span>
+            </a>
 
-          <button
-            className="md:hidden p-2 -mr-2 text-white/70 hover:text-white transition-colors"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label={mobileOpen ? "Tutup menu" : "Buka menu"}
-          >
-            {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-          </button>
+            <ul className="hidden md:flex items-center gap-0.5" role="list">
+              {navLinks.map((link) => {
+                const sectionId = link.href.replace("#", "");
+                const isActive = activeSection === sectionId;
+                return (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      className={cn(
+                        "relative px-3 py-1.5 text-sm font-medium transition-all duration-300 ",
+                        isActive
+                          ? "text-white bg-white/10"
+                          : "text-white/55 hover:text-white hover:bg-white/5"
+                      )}
+                    >
+                      {link.label}
+                      {isActive && (
+                        <motion.span
+                          layoutId="nav-indicator"
+                          className="absolute bottom-0 left-2.5 right-2.5 h-[1.5px] bg-gold "
+                          transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                        />
+                      )}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+
+            <button
+              className="md:hidden p-2 -mr-2 text-white/70 hover:text-white transition-colors"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label={mobileOpen ? "Tutup menu" : "Buka menu"}
+            >
+              {mobileOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            </button>
+          </div>
         </nav>
       </motion.header>
 
@@ -125,7 +148,7 @@ export function Navigation() {
                       href={link.href}
                       onClick={() => setMobileOpen(false)}
                       className={cn(
-                        "block px-3 py-2 text-base font-medium  transition-colors",
+                        "block px-3 py-2 text-sm font-medium  transition-colors",
                         isActive
                           ? "text-white bg-white/10"
                           : "text-white/55 hover:text-white hover:bg-white/5"
