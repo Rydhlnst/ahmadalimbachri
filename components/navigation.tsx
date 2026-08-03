@@ -64,7 +64,7 @@ export function Navigation() {
             scrolled ? "shadow-lg shadow-navy/10" : ""
           )}
         >
-          <div className="content-wide h-[48px] flex items-center justify-between px-6 md:px-10 lg:px-16">
+          <div className="content-wide h-7 flex items-center justify-between px-6 md:px-10 lg:px-16">
             <a
               href="#hero"
               className="md:hidden flex items-center gap-2 group"
