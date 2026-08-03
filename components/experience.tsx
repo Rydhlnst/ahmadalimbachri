@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, MapPin, Building2, GraduationCap, Crown, Landmark, Briefcase } from "lucide-react";
 import { FadeIn } from "@/components/ui/motion";
 import { Section, SectionHeader } from "@/components/ui/section";
+import { useShowMore, ShowMoreButton } from "@/components/ui/show-more";
 import { experience, type Experience } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
@@ -63,6 +64,13 @@ export function Experience() {
     .filter((e) => active === "all" || e.category === active)
     .sort((a, b) => b.startYear - a.startYear);
 
+  const { visible, expanded, hasMore, hiddenCount, toggle, reset } = useShowMore(filtered);
+
+  const handleCategoryChange = (value: string) => {
+    setActive(value);
+    reset();
+  };
+
   return (
     <Section id="experience" bg="white" ariaLabelledBy="experience-heading">
       <SectionHeader
@@ -76,7 +84,7 @@ export function Experience() {
         {CATEGORIES.map((cat) => (
           <button
             key={cat.value}
-            onClick={() => setActive(cat.value)}
+            onClick={() => handleCategoryChange(cat.value)}
             className={cn(
               "inline-flex items-center gap-2 px-3.5 md:px-4 py-2.5 text-[11px] font-semibold uppercase tracking-widest transition-colors duration-200 border-r border-neutral-200 last:border-r-0",
               active === cat.value ? "bg-navy text-white" : "bg-white text-neutral-500 hover:text-navy"
@@ -101,11 +109,14 @@ export function Experience() {
 
         <AnimatePresence mode="wait">
           <motion.div key={active}>
-            {filtered.map((exp, i) => (
+            {visible.map((exp, i) => (
               <ExperienceRow key={`${exp.role}-${exp.startYear}`} exp={exp} index={i} />
             ))}
           </motion.div>
         </AnimatePresence>
+        {hasMore && (
+          <ShowMoreButton expanded={expanded} hiddenCount={hiddenCount} onToggle={toggle} label="pengalaman" />
+        )}
       </FadeIn>
     </Section>
   );

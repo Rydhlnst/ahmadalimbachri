@@ -1,10 +1,15 @@
+"use client";
+
 import { Award, Building2, Calendar } from "lucide-react";
 import { FadeIn, Stagger, StaggerItem } from "@/components/ui/motion";
 import { PhotoSkeleton } from "@/components/ui/photo-skeleton";
 import { Section, SectionHeader, Panel } from "@/components/ui/section";
+import { useShowMore, ShowMoreButton } from "@/components/ui/show-more";
 import { awards } from "@/lib/data";
 
 export function Awards() {
+  const { visible, expanded, hasMore, hiddenCount, toggle } = useShowMore(awards);
+
   return (
     <Section id="awards" bg="white" ariaLabelledBy="awards-heading">
       <SectionHeader
@@ -15,7 +20,7 @@ export function Awards() {
       />
 
       <Stagger className="grid gap-6 md:gap-8 md:grid-cols-3">
-        {awards.map((award, i) => (
+        {visible.map((award, i) => (
           <StaggerItem key={`${award.title}-${award.year}`}>
             <Panel className="flex flex-col h-full">
               <PhotoSkeleton aspect="portrait" index={i + 1} label="Award" />
@@ -52,6 +57,9 @@ export function Awards() {
           </StaggerItem>
         ))}
       </Stagger>
+      {hasMore && (
+        <ShowMoreButton expanded={expanded} hiddenCount={hiddenCount} onToggle={toggle} label="penghargaan" />
+      )}
     </Section>
   );
 }

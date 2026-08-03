@@ -1,10 +1,15 @@
+"use client";
+
 import { GraduationCap, Building2, BookOpen, MapPin, Calendar } from "lucide-react";
 import { FadeIn, Stagger, StaggerItem } from "@/components/ui/motion";
 import { PhotoSkeleton } from "@/components/ui/photo-skeleton";
 import { Section, SectionHeader, Panel } from "@/components/ui/section";
+import { useShowMore, ShowMoreButton } from "@/components/ui/show-more";
 import { education } from "@/lib/data";
 
 export function Education() {
+  const { visible, expanded, hasMore, hiddenCount, toggle } = useShowMore(education);
+
   return (
     <Section id="education" bg="neutral" ariaLabelledBy="education-heading">
       <SectionHeader
@@ -15,7 +20,7 @@ export function Education() {
       />
 
       <Stagger className="grid md:grid-cols-3 gap-6 md:gap-8">
-        {education.map((edu, i) => (
+        {visible.map((edu, i) => (
           <StaggerItem key={`${edu.degree}-${edu.year}`}>
             <Panel className="flex flex-col h-full">
               <PhotoSkeleton
@@ -50,6 +55,9 @@ export function Education() {
           </StaggerItem>
         ))}
       </Stagger>
+      {hasMore && (
+        <ShowMoreButton expanded={expanded} hiddenCount={hiddenCount} onToggle={toggle} label="pendidikan" />
+      )}
     </Section>
   );
 }

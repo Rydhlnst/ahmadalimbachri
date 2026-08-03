@@ -1,7 +1,10 @@
+"use client";
+
 import { MapPin, ArrowUpRight, Mic, Calendar } from "lucide-react";
 import { FadeIn, Stagger, StaggerItem } from "@/components/ui/motion";
 import { PhotoSkeleton } from "@/components/ui/photo-skeleton";
 import { Section, SectionHeader, Panel } from "@/components/ui/section";
+import { useShowMore, ShowMoreButton } from "@/components/ui/show-more";
 import { expertContributions, type ExpertContribution } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
@@ -29,33 +32,44 @@ export function ExpertContributions() {
         {years.map((year, yearIndex) => {
           const yearItems = sorted.filter((c) => c.year === year);
           return (
-            <FadeIn key={year} delay={yearIndex * 0.05}>
-              <div>
-                <div className="flex items-baseline justify-between pb-4 mb-6 border-b border-navy">
-                  <span className="flex items-baseline gap-3">
-                    <Calendar className="h-4 w-4 text-gold self-center" strokeWidth={1.5} />
-                    <span className="font-heading text-3xl md:text-4xl font-bold text-navy leading-none tabular-nums">
-                      {year}
-                    </span>
-                  </span>
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-500 tabular-nums">
-                    {String(yearItems.length).padStart(2, "0")} · Kegiatan
-                  </span>
-                </div>
-
-                <Stagger className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-                  {yearItems.map((c, i) => (
-                    <StaggerItem key={c.id}>
-                      <ContributionCard contribution={c} index={i} />
-                    </StaggerItem>
-                  ))}
-                </Stagger>
-              </div>
-            </FadeIn>
+            <YearSection key={year} year={year} items={yearItems} yearIndex={yearIndex} />
           );
         })}
       </div>
     </Section>
+  );
+}
+
+function YearSection({ year, items, yearIndex }: { year: number; items: ExpertContribution[]; yearIndex: number }) {
+  const { visible, expanded, hasMore, hiddenCount, toggle } = useShowMore(items);
+
+  return (
+    <FadeIn delay={yearIndex * 0.05}>
+      <div>
+        <div className="flex items-baseline justify-between pb-4 mb-6 border-b border-navy">
+          <span className="flex items-baseline gap-3">
+            <Calendar className="h-4 w-4 text-gold self-center" strokeWidth={1.5} />
+            <span className="font-heading text-3xl md:text-4xl font-bold text-navy leading-none tabular-nums">
+              {year}
+            </span>
+          </span>
+          <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-500 tabular-nums">
+            {String(items.length).padStart(2, "0")} · Kegiatan
+          </span>
+        </div>
+
+        <Stagger className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {visible.map((c, i) => (
+            <StaggerItem key={c.id}>
+              <ContributionCard contribution={c} index={i} />
+            </StaggerItem>
+          ))}
+        </Stagger>
+        {hasMore && (
+          <ShowMoreButton expanded={expanded} hiddenCount={hiddenCount} onToggle={toggle} label="kegiatan" />
+        )}
+      </div>
+    </FadeIn>
   );
 }
 

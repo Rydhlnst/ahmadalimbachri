@@ -1,12 +1,18 @@
+"use client";
+
 import { Users, Calendar, CheckCircle2, Circle } from "lucide-react";
 import { FadeIn, Stagger, StaggerItem } from "@/components/ui/motion";
 import { Section, SectionHeader } from "@/components/ui/section";
+import { useShowMore, ShowMoreButton } from "@/components/ui/show-more";
 import { organizations } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 export function Organizations() {
-  const active = organizations.filter((o) => o.endYear === null);
-  const inactive = organizations.filter((o) => o.endYear !== null);
+  const allActive = organizations.filter((o) => o.endYear === null);
+  const allInactive = organizations.filter((o) => o.endYear !== null);
+
+  const activeHook = useShowMore(allActive);
+  const inactiveHook = useShowMore(allInactive);
 
   return (
     <Section id="organizations" bg="neutral" ariaLabelledBy="organizations-heading">
@@ -17,7 +23,7 @@ export function Organizations() {
         description="Peran dalam berbagai organisasi profesional, akademik, dan kemasyarakatan di tingkat regional maupun nasional."
       />
 
-      {active.length > 0 && (
+      {allActive.length > 0 && (
         <div className="mb-14">
           <FadeIn className="flex items-center gap-3 mb-5 pb-3 border-b border-navy">
             <CheckCircle2 className="h-4 w-4 text-navy" strokeWidth={1.5} />
@@ -26,20 +32,23 @@ export function Organizations() {
             </h3>
             <span className="flex-1" />
             <span className="text-[11px] font-mono text-neutral-500 tabular-nums">
-              {String(active.length).padStart(2, "0")} · Aktif
+              {String(allActive.length).padStart(2, "0")} · Aktif
             </span>
           </FadeIn>
           <Stagger className="grid md:grid-cols-2 lg:grid-cols-3 divide-x divide-y divide-neutral-200 border border-neutral-200 bg-white">
-            {active.map((org, i) => (
+            {activeHook.visible.map((org, i) => (
               <StaggerItem key={`${org.role}-${org.name}`}>
                 <OrgRow org={org} active index={i} />
               </StaggerItem>
             ))}
           </Stagger>
+          {activeHook.hasMore && (
+            <ShowMoreButton expanded={activeHook.expanded} hiddenCount={activeHook.hiddenCount} onToggle={activeHook.toggle} label="organisasi aktif" />
+          )}
         </div>
       )}
 
-      {inactive.length > 0 && (
+      {allInactive.length > 0 && (
         <div>
           <FadeIn className="flex items-center gap-3 mb-5 pb-3 border-b border-neutral-300">
             <Circle className="h-4 w-4 text-neutral-400" strokeWidth={1.5} />
@@ -48,16 +57,19 @@ export function Organizations() {
             </h3>
             <span className="flex-1" />
             <span className="text-[11px] font-mono text-neutral-500 tabular-nums">
-              {String(inactive.length).padStart(2, "0")} · Selesai
+              {String(allInactive.length).padStart(2, "0")} · Selesai
             </span>
           </FadeIn>
           <Stagger className="grid md:grid-cols-2 lg:grid-cols-3 divide-x divide-y divide-neutral-200 border border-neutral-200 bg-white">
-            {inactive.map((org, i) => (
+            {inactiveHook.visible.map((org, i) => (
               <StaggerItem key={`${org.role}-${org.name}`}>
                 <OrgRow org={org} active={false} index={i} />
               </StaggerItem>
             ))}
           </Stagger>
+          {inactiveHook.hasMore && (
+            <ShowMoreButton expanded={inactiveHook.expanded} hiddenCount={inactiveHook.hiddenCount} onToggle={inactiveHook.toggle} label="organisasi selesai" />
+          )}
         </div>
       )}
     </Section>

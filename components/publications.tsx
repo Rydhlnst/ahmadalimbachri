@@ -5,6 +5,7 @@ import { Search, Globe, BookOpen, Presentation, FileText, Users, Calendar, Award
 import { FadeIn, Stagger, StaggerItem, FadeInBlur } from "@/components/ui/motion";
 import { PhotoSkeleton } from "@/components/ui/photo-skeleton";
 import { Section, SectionHeader, Panel } from "@/components/ui/section";
+import { useShowMore, ShowMoreButton } from "@/components/ui/show-more";
 import { publications, type Publication } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
@@ -103,7 +104,8 @@ export function Publications() {
     conference: filtered.filter((p) => p.type === "conference"),
   };
 
-  const items = byType[activeTab] ?? [];
+  const allItems = byType[activeTab] ?? [];
+  const { visible, expanded, hasMore, hiddenCount, toggle } = useShowMore(allItems);
 
   return (
     <Section id="publications" bg="neutral" ariaLabelledBy="publications-heading">
@@ -143,18 +145,23 @@ export function Publications() {
           </div>
         </div>
 
-        {items.length === 0 ? (
+        {allItems.length === 0 ? (
           <div className="text-center py-16 text-neutral-500 text-sm">
             Tidak ada publikasi yang cocok.
           </div>
         ) : (
-          <Stagger className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {items.map((pub, i) => (
-              <StaggerItem key={pub.id}>
-                <PublicationCard pub={pub} index={i} />
-              </StaggerItem>
-            ))}
-          </Stagger>
+          <>
+            <Stagger className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {visible.map((pub, i) => (
+                <StaggerItem key={pub.id}>
+                  <PublicationCard pub={pub} index={i} />
+                </StaggerItem>
+              ))}
+            </Stagger>
+            {hasMore && (
+              <ShowMoreButton expanded={expanded} hiddenCount={hiddenCount} onToggle={toggle} label="publikasi" />
+            )}
+          </>
         )}
       </FadeInBlur>
     </Section>
