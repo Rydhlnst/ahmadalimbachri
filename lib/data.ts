@@ -565,3 +565,97 @@ export const stats = [
   { label: "Jabatan Kepemimpinan", value: 15, suffix: "+" },
   { label: "Penghargaan", value: 3, suffix: "" },
 ];
+
+export type SocialPlatformKey =
+  | "instagram"
+  | "facebook"
+  | "youtube"
+  | "tiktok"
+  | "threads"
+  | "x"
+  | "snackvideo";
+
+export interface SocialPlatform {
+  platform: SocialPlatformKey;
+  url: string;
+}
+
+export interface SocialAccount {
+  id: string;
+  name: string;
+  handle: string;
+  email?: string;
+  description: string;
+  image: string;
+  platforms: SocialPlatform[];
+}
+
+export const socialAccounts: SocialAccount[] = [
+  {
+    id: "real",
+    name: "Real",
+    handle: "@realprofahmadab",
+    email: "realprofahmadab@gmail.com",
+    description: "Akun media sosial utama & personal.",
+    image: "/accounts/real.png",
+    platforms: [
+      { platform: "instagram",  url: "https://www.instagram.com/realprofahmadab" },
+      { platform: "youtube",    url: "https://youtube.com/@realprofahmadab" },
+      { platform: "facebook",   url: "https://www.facebook.com/share/19DdUn1tt3/" },
+      { platform: "tiktok",     url: "https://tiktok.com/@real.prof.ahmad.a" },
+      { platform: "threads",    url: "https://www.threads.com/@realprofahmadab" },
+      { platform: "x",          url: "https://x.com/RealProfAhmadab" },
+      { platform: "snackvideo", url: "https://s.snackvideo.com/u/@realprofahmada/vjCF8UhA" },
+    ],
+  },
+  {
+    id: "tv",
+    name: "TV",
+    handle: "@profahmadabtv",
+    email: "profahmadabtv@gmail.com",
+    description: "Konten video dan siaran televisi.",
+    image: "/accounts/tv.png",
+    platforms: [
+      { platform: "instagram",  url: "https://www.instagram.com/profahmadabtv" },
+      { platform: "youtube",    url: "https://youtube.com/@profahmadabtv" },
+      { platform: "facebook",   url: "https://www.facebook.com/share/14jjpnRSp13/" },
+      { platform: "tiktok",     url: "https://www.tiktok.com/@profahmad.abtv" },
+      { platform: "threads",    url: "https://www.threads.com/@profahmadabtv" },
+      { platform: "x",          url: "https://x.com/ProfAhmadabtv" },
+      { platform: "snackvideo", url: "https://s.snackvideo.com/u/@profahmadabtv/dVDWt84o" },
+    ],
+  },
+  {
+    id: "official",
+    name: "Official",
+    handle: "@profahmadabofficial",
+    email: "profahmadabofficial@gmail.com",
+    description: "Kanal komunikasi resmi.",
+    image: "/accounts/official.png",
+    platforms: [
+      { platform: "instagram",  url: "https://www.instagram.com/profahmadabofficial" },
+      { platform: "youtube",    url: "https://youtube.com/@profahmadabofficial" },
+      { platform: "facebook",   url: "https://www.facebook.com/share/1bYqafskUn/" },
+      { platform: "tiktok",     url: "https://tiktok.com/@prof.ahmad.ab.off" },
+      { platform: "threads",    url: "https://www.threads.com/@profahmadabofficial" },
+      { platform: "x",          url: "https://x.com/ProfAhmadAb" },
+      { platform: "snackvideo", url: "https://s.snackvideo.com/u/@profahmadaboff/u3xXad8E" },
+    ],
+  },
+  {
+    id: "id",
+    name: "ID",
+    handle: "@profahmadabid",
+    description: "Kanal komunitas Indonesia.",
+    image: "/accounts/id.png",
+    platforms: [
+      { platform: "instagram",  url: "https://www.instagram.com/profahmadabid" },
+      { platform: "youtube",    url: "https://youtube.com/@profahmadabid" },
+      { platform: "facebook",   url: "https://www.facebook.com/share/1CseskbjhH/" },
+      { platform: "tiktok",     url: "https://tiktok.com/@prof.ahmad.ab.id" },
+      { platform: "threads",    url: "https://www.threads.com/@profahmadabid" },
+      { platform: "x",          url: "https://x.com/ProfahmadAbId" },
+      { platform: "snackvideo", url: "https://s.snackvideo.com/u/@profahmadabid/duuFsxmz" },
+    ],
+  },
+];
