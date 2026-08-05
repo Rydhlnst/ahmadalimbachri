@@ -131,7 +131,7 @@ export function Hero() {
               </a>
               <a
                 href="#about"
-                className="inline-flex items-center gap-2 h-11 px-2 text-sm font-medium text-navy border-b border-navy hover:border-gold hover:text-gold transition-colors duration-300"
+                className="inline-flex items-center gap-2 h-11 px-2 text-sm font-medium text-navy border-b border-navy hover:text-gold transition-colors duration-300"
               >
                 Pelajari Lebih
                 <ArrowDown className="h-4 w-4" strokeWidth={1.5} />

@@ -71,7 +71,7 @@ function AccountCard({
   return (
     <button
       onClick={onClick}
-      className="group text-left border border-white/15 bg-white/[0.02] hover:bg-white/[0.06] hover:border-gold/50 transition-all duration-300 flex flex-col"
+      className="group text-left border border-white/15 bg-white/[0.02] hover:bg-white/[0.06] transition-all duration-300 flex flex-col"
     >
       {/* Photo area — dark neutral backdrop keeps colorful avatar contained */}
       <div className="relative aspect-square bg-[oklch(0.20_0.03_252)] overflow-hidden">
@@ -197,7 +197,7 @@ function SocialModal({
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 text-neutral-400 hover:text-navy transition-colors z-10 border border-neutral-200 hover:border-navy"
+          className="absolute top-4 right-4 p-2 text-neutral-400 hover:text-navy transition-colors z-10"
           aria-label="Tutup"
         >
           <CloseIcon className="h-4 w-4" strokeWidth={1.5} />
@@ -245,7 +245,7 @@ function SocialModal({
                 rel="noopener noreferrer"
                 className="group p-5 flex items-center gap-3 hover:bg-neutral-50 transition-colors"
               >
-                <div className="p-2 border border-neutral-200 group-hover:border-navy transition-colors flex-shrink-0">
+                <div className="p-2 border border-neutral-200 flex-shrink-0">
                   <Icon className="h-4 w-4 text-navy" />
                 </div>
                 <div className="flex-1 min-w-0">
