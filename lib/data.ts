@@ -458,15 +458,7 @@ export const expertContributions: ExpertContribution[] = [
     role: "Narasumber",
     category: "government",
   },
-  {
-    id: "ec-2",
-    title: "Tim Seleksi BAWASLU Provinsi Kalimantan Selatan",
-    event: "Seleksi BAWASLU Provinsi Kalimantan Selatan",
-    location: "Kalimantan Selatan",
-    year: 2022,
-    role: "Tim Seleksi",
-    category: "government",
-  },
+
   {
     id: "ec-3",
     title: "Narasumber Forum Komunikasi Publik Pemajuan Iptek",
