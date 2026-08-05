@@ -35,12 +35,7 @@ export function Navigation() {
         className="fixed top-0 left-0 right-0 z-50"
       >
         {/* Top bar — logo area */}
-        <div
-          className={cn(
-            "transition-all duration-500 bg-white border-b border-neutral-200",
-            scrolled ? "h-0 overflow-hidden opacity-0" : "h-12 opacity-100"
-          )}
-        >
+        <div className="transition-all duration-500 bg-white border-b border-neutral-200 h-14 opacity-100">
           <div className="content-wide h-full flex items-center justify-between px-6 md:px-10 lg:px-16">
             <a
               href="#hero"
@@ -64,7 +59,7 @@ export function Navigation() {
             scrolled ? "shadow-lg shadow-navy/10" : ""
           )}
         >
-          <div className="content-wide h-7 flex items-center justify-between px-6 md:px-10 lg:px-16">
+          <div className="content-wide h-10 flex items-center justify-between px-6 md:px-10 lg:px-16">
             <a
               href="#hero"
               className="md:hidden flex items-center gap-2 group"
