@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -14,6 +15,11 @@ const navLinks = [
   { href: "#awards", label: "Penghargaan" },
   { href: "#organizations", label: "Organisasi" },
   { href: "#contact", label: "Kontak" },
+];
+
+const pageLinks = [
+  { href: "/berita", label: "Berita" },
+  { href: "/galeri", label: "Galeri" },
 ];
 
 export function Navigation() {
@@ -97,6 +103,17 @@ export function Navigation() {
                   </li>
                 );
               })}
+              <li className="w-px h-4 bg-white/20 mx-1" />
+              {pageLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="relative px-3 py-1.5 text-sm font-medium text-gold/80 hover:text-gold hover:bg-white/5 transition-all duration-300"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
 
             <button
@@ -154,6 +171,23 @@ export function Navigation() {
                   </motion.li>
                 );
               })}
+              <li className="h-px bg-white/10 my-2" />
+              {pageLinks.map((link, i) => (
+                <motion.li
+                  key={link.href}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: (navLinks.length + i) * 0.05 }}
+                >
+                  <Link
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="block px-3 py-2 text-sm font-medium text-gold/80 hover:text-gold hover:bg-white/5 transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </motion.li>
+              ))}
             </ul>
           </motion.nav>
         </motion.div>

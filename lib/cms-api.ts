@@ -42,6 +42,18 @@ export async function createCategory(data: {
   return result[0];
 }
 
+export async function updateCategory(
+  id: number,
+  data: { name?: string; slug?: string }
+): Promise<Category> {
+  const result = await db
+    .update(categories)
+    .set(data)
+    .where(eq(categories.id, id))
+    .returning();
+  return result[0];
+}
+
 export async function deleteCategory(id: number) {
   await db.delete(categories).where(eq(categories.id, id));
 }
@@ -220,6 +232,29 @@ export async function createMedia(data: {
   return result[0];
 }
 
+export async function getMediaById(
+  id: number
+): Promise<Media | undefined> {
+  const result = await db
+    .select()
+    .from(media)
+    .where(eq(media.id, id))
+    .limit(1);
+  return result[0];
+}
+
+export async function updateMedia(
+  id: number,
+  data: { alt?: string; caption?: string; category?: string }
+): Promise<Media> {
+  const result = await db
+    .update(media)
+    .set(data)
+    .where(eq(media.id, id))
+    .returning();
+  return result[0];
+}
+
 export async function deleteMedia(id: number) {
   await db.delete(media).where(eq(media.id, id));
 }
@@ -281,6 +316,18 @@ export async function createFaq(data: {
   return result[0];
 }
 
+export async function updateFaq(
+  id: number,
+  data: { question?: string; answer?: string; order?: number; status?: string }
+): Promise<Faq> {
+  const result = await db
+    .update(faqs)
+    .set(data)
+    .where(eq(faqs.id, id))
+    .returning();
+  return result[0];
+}
+
 export async function deleteFaq(id: number) {
   await db.delete(faqs).where(eq(faqs.id, id));
 }
@@ -300,6 +347,25 @@ export async function createTestimonial(data: {
   order?: number;
 }): Promise<Testimonial> {
   const result = await db.insert(testimonials).values(data).returning();
+  return result[0];
+}
+
+export async function updateTestimonial(
+  id: number,
+  data: {
+    name?: string;
+    role?: string;
+    content?: string;
+    photoUrl?: string;
+    featured?: boolean;
+    order?: number;
+  }
+): Promise<Testimonial> {
+  const result = await db
+    .update(testimonials)
+    .set(data)
+    .where(eq(testimonials.id, id))
+    .returning();
   return result[0];
 }
 
@@ -344,6 +410,21 @@ export async function updateContactSubmissionStatus(
     .update(contactSubmissions)
     .set({ status })
     .where(eq(contactSubmissions.id, id));
+}
+
+export async function deleteContactSubmission(id: number) {
+  await db.delete(contactSubmissions).where(eq(contactSubmissions.id, id));
+}
+
+export async function createContactSubmission(data: {
+  name: string;
+  email: string;
+  phone?: string;
+  subject?: string;
+  message: string;
+}): Promise<ContactSubmission> {
+  const result = await db.insert(contactSubmissions).values(data).returning();
+  return result[0];
 }
 
 // ─── Stats ───────────────────────────────────────────────

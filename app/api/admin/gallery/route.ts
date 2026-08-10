@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth";
-import { getMedia, createMedia, deleteMedia } from "@/lib/cms-api";
+import { getMedia, createMedia, updateMedia, deleteMedia } from "@/lib/cms-api";
 
 export async function GET(request: NextRequest) {
   try {
@@ -60,6 +60,38 @@ export async function POST(request: NextRequest) {
     console.error("Create media error:", error);
     return NextResponse.json(
       { error: "Gagal menambahkan media" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(request: NextRequest) {
+  try {
+    const cookieHeader = request.headers.get("cookie");
+    await requireAuth(cookieHeader);
+
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json(
+        { error: "ID media harus diisi" },
+        { status: 400 }
+      );
+    }
+
+    const body = await request.json();
+    const { alt, caption, category } = body;
+
+    const media = await updateMedia(parseInt(id), { alt, caption, category });
+    return NextResponse.json(media);
+  } catch (error: any) {
+    if (error.message === "Unauthorized") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    console.error("Update media error:", error);
+    return NextResponse.json(
+      { error: "Gagal memperbarui media" },
       { status: 500 }
     );
   }

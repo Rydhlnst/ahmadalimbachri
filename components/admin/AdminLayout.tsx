@@ -13,14 +13,21 @@ import {
   Menu,
   X,
   ChevronRight,
+  FolderOpen,
+  HelpCircle,
+  Quote,
+  Mail,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/sonner";
 
 const navigation = [
   { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
   { name: "Berita", href: "/admin/posts", icon: FileText },
+  { name: "Kategori", href: "/admin/categories", icon: FolderOpen },
   { name: "Galeri", href: "/admin/gallery", icon: ImageIcon },
+  { name: "FAQ", href: "/admin/faqs", icon: HelpCircle },
+  { name: "Testimonial", href: "/admin/testimonials", icon: Quote },
+  { name: "Kontak", href: "/admin/contacts", icon: Mail },
   { name: "Pengaturan", href: "/admin/settings", icon: Settings },
 ];
 
@@ -131,11 +138,19 @@ export default function AdminLayout({
                       ? "Edit Berita"
                       : pathname.includes("/posts")
                         ? "Berita"
-                        : pathname.includes("/gallery")
-                          ? "Galeri"
-                          : pathname.includes("/settings")
-                            ? "Pengaturan"
-                            : ""}
+                        : pathname.includes("/categories")
+                          ? "Kategori"
+                          : pathname.includes("/gallery")
+                            ? "Galeri"
+                            : pathname.includes("/faqs")
+                              ? "FAQ"
+                              : pathname.includes("/testimonials")
+                                ? "Testimonial"
+                                : pathname.includes("/contacts")
+                                  ? "Kontak"
+                                  : pathname.includes("/settings")
+                                    ? "Pengaturan"
+                                    : ""}
                 </span>
               </>
             )}

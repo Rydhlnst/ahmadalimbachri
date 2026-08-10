@@ -30,7 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Plus, Trash2, ZoomIn, ImageIcon } from "lucide-react";
+import { Plus, Trash2, ZoomIn, ImageIcon, Pencil } from "lucide-react";
 
 interface MediaItem {
   id: number;
@@ -55,12 +55,18 @@ export default function GalleryPage() {
   const [uploading, setUploading] = useState(false);
   const [showUpload, setShowUpload] = useState(false);
   const [previewItem, setPreviewItem] = useState<MediaItem | null>(null);
+  const [editItem, setEditItem] = useState<MediaItem | null>(null);
   const [filterCategory, setFilterCategory] = useState("all");
 
   const [imageUrl, setImageUrl] = useState("");
   const [alt, setAlt] = useState("");
   const [caption, setCaption] = useState("");
   const [category, setCategory] = useState("Lainnya");
+
+  const [editAlt, setEditAlt] = useState("");
+  const [editCaption, setEditCaption] = useState("");
+  const [editCategory, setEditCategory] = useState("Lainnya");
+  const [savingEdit, setSavingEdit] = useState(false);
 
   const fetchMedia = useCallback(async () => {
     try {
@@ -126,6 +132,41 @@ export default function GalleryPage() {
       fetchMedia();
     } catch {
       toast.error("Gagal menghapus media");
+    }
+  }
+
+  function openEditDialog(item: MediaItem) {
+    setEditItem(item);
+    setEditAlt(item.alt || "");
+    setEditCaption(item.caption || "");
+    setEditCategory(item.category || "Lainnya");
+    setPreviewItem(null);
+  }
+
+  async function handleSaveEdit() {
+    if (!editItem) return;
+
+    setSavingEdit(true);
+    try {
+      const res = await fetch(`/api/admin/gallery?id=${editItem.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          alt: editAlt,
+          caption: editCaption,
+          category: editCategory,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Gagal memperbarui media");
+
+      toast.success("Gambar berhasil diperbarui");
+      setEditItem(null);
+      fetchMedia();
+    } catch {
+      toast.error("Gagal memperbarui media");
+    } finally {
+      setSavingEdit(false);
     }
   }
 
@@ -294,40 +335,112 @@ export default function GalleryPage() {
                   <span className="text-sm text-muted-foreground">
                     Kategori: {previewItem.category || "-"}
                   </span>
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        className="flex items-center gap-2"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                        Hapus
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>Hapus Gambar</AlertDialogTitle>
-                        <AlertDialogDescription>
-                          Apakah Anda yakin ingin menghapus gambar ini? Tindakan
-                          ini tidak dapat dibatalkan.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Batal</AlertDialogCancel>
-                        <AlertDialogAction
-                          onClick={() => handleDelete(previewItem.id)}
-                          className="bg-destructive text-destructive-foreground"
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center gap-2"
+                      onClick={() => openEditDialog(previewItem)}
+                    >
+                      <Pencil className="h-4 w-4" />
+                      Edit
+                    </Button>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          className="flex items-center gap-2"
                         >
+                          <Trash2 className="h-4 w-4" />
                           Hapus
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Hapus Gambar</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Apakah Anda yakin ingin menghapus gambar ini? Tindakan
+                            ini tidak dapat dibatalkan.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Batal</AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => handleDelete(previewItem.id)}
+                            className="bg-destructive text-destructive-foreground"
+                          >
+                            Hapus
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </div>
                 </div>
               </div>
             </>
           )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Dialog */}
+      <Dialog open={!!editItem} onOpenChange={(open) => !open && setEditItem(null)}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Edit Gambar</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            {editItem && (
+              <img
+                src={editItem.imageUrl}
+                alt={editAlt}
+                className="w-full h-48 object-cover rounded-lg border border-border"
+              />
+            )}
+            <div className="space-y-2">
+              <Label>Alt Text</Label>
+              <Input
+                value={editAlt}
+                onChange={(e) => setEditAlt(e.target.value)}
+                placeholder="Deskripsi singkat gambar (untuk aksesibilitas)"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Caption</Label>
+              <Input
+                value={editCaption}
+                onChange={(e) => setEditCaption(e.target.value)}
+                placeholder="Keterangan gambar (opsional)"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Kategori</Label>
+              <Select value={editCategory} onValueChange={setEditCategory}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {GALLERY_CATEGORIES.map((cat) => (
+                    <SelectItem key={cat} value={cat}>
+                      {cat}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex justify-end gap-2 pt-2">
+              <Button
+                variant="outline"
+                onClick={() => setEditItem(null)}
+                disabled={savingEdit}
+              >
+                Batal
+              </Button>
+              <Button onClick={handleSaveEdit} disabled={savingEdit}>
+                {savingEdit ? "Menyimpan..." : "Simpan"}
+              </Button>
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getPosts, getCategories } from "@/lib/cms-api";
+import { getPosts } from "@/lib/cms-api";
 
 export const dynamic = "force-dynamic";
 import Link from "next/link";

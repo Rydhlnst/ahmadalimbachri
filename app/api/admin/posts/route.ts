@@ -4,7 +4,6 @@ import {
   getPosts,
   createPost,
   getCategories,
-  createCategory,
 } from "@/lib/cms-api";
 
 export async function GET(request: NextRequest) {

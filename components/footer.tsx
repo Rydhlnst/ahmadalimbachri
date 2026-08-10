@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ArrowUp, Mail, MapPin } from "lucide-react";
 import { professor } from "@/lib/data";
 
@@ -20,6 +21,28 @@ export function Footer() {
 
           <div className="flex flex-col md:items-end justify-between gap-5">
             <div className="flex flex-col gap-2 md:items-end">
+              <div className="flex items-center gap-3">
+                <Link
+                  href="/berita"
+                  className="text-sm text-white/60 hover:text-gold transition-colors"
+                >
+                  Berita
+                </Link>
+                <span className="text-white/20">·</span>
+                <Link
+                  href="/galeri"
+                  className="text-sm text-white/60 hover:text-gold transition-colors"
+                >
+                  Galeri
+                </Link>
+                <span className="text-white/20">·</span>
+                <Link
+                  href="/admin/login"
+                  className="text-sm text-white/60 hover:text-gold transition-colors"
+                >
+                  Admin
+                </Link>
+              </div>
               <a href={`mailto:${professor.email}`} className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-gold transition-colors">
                 <Mail className="h-3.5 w-3.5" strokeWidth={1.5} />
                 {professor.email}
