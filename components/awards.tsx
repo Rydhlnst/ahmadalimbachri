@@ -2,7 +2,7 @@
 
 import { Award, Building2, Calendar } from "lucide-react";
 import { FadeIn, Stagger, StaggerItem } from "@/components/ui/motion";
-import { PhotoSkeleton } from "@/components/ui/photo-skeleton";
+import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { Section, SectionHeader, Panel } from "@/components/ui/section";
 import { useShowMore, ShowMoreButton } from "@/components/ui/show-more";
 import { awards } from "@/lib/data";
@@ -23,7 +23,7 @@ export function Awards() {
         {visible.map((award, i) => (
           <StaggerItem key={`${award.title}-${award.year}`}>
             <Panel className="flex flex-col h-full">
-              <PhotoSkeleton aspect="portrait" index={i + 1} label="Award" />
+              <ImagePlaceholder variant="gradient" aspect="portrait" index={i + 1} label="Award" />
               <div className="p-6 flex flex-col flex-1 border-t border-neutral-200">
                 <div className="flex items-center justify-between mb-5">
                   <span className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-widest text-gold">

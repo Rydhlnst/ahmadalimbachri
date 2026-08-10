@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getPostBySlug, getPosts } from "@/lib/cms-api";
 import { format } from "date-fns";
 import { id as idLocale } from "date-fns/locale";
+import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 
 export const dynamic = "force-dynamic";
 
@@ -93,13 +94,17 @@ export default async function BeritaDetailPage({
       {/* Content */}
       <div className="max-w-4xl mx-auto px-6 md:px-10 lg:px-16 py-12 md:py-16">
         {/* Featured image */}
-        {post.featuredImageUrl && (
+        {post.featuredImageUrl ? (
           <div className="mb-10 border border-neutral-200">
             <img
               src={post.featuredImageUrl}
               alt={post.title}
               className="w-full h-auto"
             />
+          </div>
+        ) : (
+          <div className="mb-10">
+            <ImagePlaceholder variant="initial" text={post.title} aspect="video" />
           </div>
         )}
 
@@ -146,11 +151,7 @@ export default async function BeritaDetailPage({
                         />
                       </div>
                     ) : (
-                      <div className="aspect-[16/9] bg-gradient-to-br from-navy to-navy/80 flex items-center justify-center">
-                        <span className="text-white/20 text-3xl font-heading font-bold">
-                          {related.title.charAt(0)}
-                        </span>
-                      </div>
+                      <ImagePlaceholder variant="initial" text={related.title} aspect="landscape" />
                     )}
                     <div className="p-4">
                       <h3 className="font-heading text-sm font-bold text-navy leading-snug group-hover:text-gold transition-colors line-clamp-2">

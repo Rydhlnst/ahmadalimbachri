@@ -2,7 +2,7 @@
 
 import { GraduationCap, Building2, BookOpen, MapPin, Calendar } from "lucide-react";
 import { FadeIn, Stagger, StaggerItem } from "@/components/ui/motion";
-import { PhotoSkeleton } from "@/components/ui/photo-skeleton";
+import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { Section, SectionHeader, Panel } from "@/components/ui/section";
 import { useShowMore, ShowMoreButton } from "@/components/ui/show-more";
 import { education } from "@/lib/data";
@@ -23,7 +23,8 @@ export function Education() {
         {visible.map((edu, i) => (
           <StaggerItem key={`${edu.degree}-${edu.year}`}>
             <Panel className="flex flex-col h-full">
-              <PhotoSkeleton
+              <ImagePlaceholder
+                variant="gradient"
                 aspect="portrait"
                 index={i + 1}
                 label={edu.degree.split(" ")[0]}

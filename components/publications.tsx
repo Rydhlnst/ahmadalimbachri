@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import { Search, Globe, BookOpen, Presentation, FileText, Users, Calendar, Award } from "lucide-react";
 import { FadeIn, Stagger, StaggerItem, FadeInBlur } from "@/components/ui/motion";
-import { PhotoSkeleton } from "@/components/ui/photo-skeleton";
+import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { Section, SectionHeader, Panel } from "@/components/ui/section";
 import { useShowMore, ShowMoreButton } from "@/components/ui/show-more";
 import { publications, type Publication } from "@/lib/data";
@@ -29,7 +29,7 @@ function PublicationCard({ pub, index }: { pub: Publication; index: number }) {
   return (
     <Panel className="flex flex-col h-full">
       <div className="relative">
-        <PhotoSkeleton aspect="landscape" index={index + 1} label={config.label} />
+        <ImagePlaceholder variant="gradient" aspect="landscape" index={index + 1} label={config.label} />
         {pub.indexing && (
           <span className="absolute top-3 right-3 flex items-center gap-1 text-[10px] font-mono font-bold text-white bg-navy px-2 py-1 tracking-wider">
             <Award className="h-3 w-3" strokeWidth={1.5} />

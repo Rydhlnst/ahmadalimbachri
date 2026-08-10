@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Plus, Trash2, Pencil, Quote } from "lucide-react";
 import ImageUpload from "@/components/admin/ImageUpload";
+import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 
 interface Testimonial {
   id: number;
@@ -196,11 +197,7 @@ export default function TestimonialsPage() {
                       className="w-12 h-12 rounded-full object-cover"
                     />
                   ) : (
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="text-lg font-bold text-primary">
-                        {testimonial.name.charAt(0)}
-                      </span>
-                    </div>
+                    <ImagePlaceholder variant="initial" text={testimonial.name} aspect="square" className="w-12 h-12 rounded-full" />
                   )}
                   <div>
                     <p className="font-medium">{testimonial.name}</p>

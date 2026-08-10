@@ -2,7 +2,7 @@
 
 import { MapPin, ArrowUpRight, Mic, Calendar } from "lucide-react";
 import { FadeIn, Stagger, StaggerItem } from "@/components/ui/motion";
-import { PhotoSkeleton } from "@/components/ui/photo-skeleton";
+import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { Section, SectionHeader, Panel } from "@/components/ui/section";
 import { useShowMore, ShowMoreButton } from "@/components/ui/show-more";
 import { expertContributions, type ExpertContribution } from "@/lib/data";
@@ -76,7 +76,7 @@ function YearSection({ year, items, yearIndex }: { year: number; items: ExpertCo
 function ContributionCard({ contribution, index }: { contribution: ExpertContribution; index: number }) {
   return (
     <Panel className="group flex flex-col h-full">
-      <PhotoSkeleton aspect="landscape" index={index + 1} label={categoryLabel[contribution.category]} />
+      <ImagePlaceholder variant="gradient" aspect="landscape" index={index + 1} label={categoryLabel[contribution.category]} />
       <div className="p-5 flex flex-col flex-1 border-t border-neutral-200">
         <div className="flex items-center justify-between mb-3 text-[10px] font-mono uppercase tracking-widest">
           <span className="flex items-center gap-1.5 text-neutral-400">

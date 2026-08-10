@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getPosts, getCategories } from "@/lib/cms-api";
 import { format } from "date-fns";
 import { id as idLocale } from "date-fns/locale";
+import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 
 export const metadata: Metadata = {
   title: "Berita & Artikel - Prof. Dr. Ahmad Alim Bachri",
@@ -82,11 +83,7 @@ export default async function BeritaPage() {
                       />
                     </div>
                   ) : (
-                    <div className="aspect-[16/10] bg-gradient-to-br from-navy to-navy/80 flex items-center justify-center">
-                      <span className="text-white/20 text-4xl font-heading font-bold">
-                        {post.title.charAt(0)}
-                      </span>
-                    </div>
+                    <ImagePlaceholder variant="initial" text={post.title} aspect="video" />
                   )}
 
                   <div className="p-5 md:p-6">

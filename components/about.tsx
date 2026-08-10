@@ -1,5 +1,5 @@
 import { FadeIn, FadeInBlur } from "@/components/ui/motion";
-import { PhotoSkeleton } from "@/components/ui/photo-skeleton";
+import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { Section, SectionHeader, DataRow } from "@/components/ui/section";
 import { MapPin, Calendar, BookOpen, GraduationCap, Building2 } from "lucide-react";
 import { professor } from "@/lib/data";
@@ -19,7 +19,7 @@ export function About() {
         {/* Portrait — contained */}
         <FadeIn direction="right" className="lg:sticky lg:top-24">
           <div className="max-w-sm mx-auto lg:mx-0">
-            <PhotoSkeleton aspect="portrait-tall" index={1} label="Portrait" />
+            <ImagePlaceholder variant="gradient" aspect="portrait-tall" index={1} label="Portrait" />
             <div className="mt-3 flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-neutral-400">
               <span>Prof. Dr. Ahmad</span>
               <span>Rektor · 2026</span>
